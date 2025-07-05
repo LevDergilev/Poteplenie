@@ -1,5 +1,7 @@
 import telebot
 from tokenid import token
+import random
+import os
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
@@ -12,7 +14,7 @@ def send_welcome(message):
 
 @bot.message_handler(commands=['help'])
 def send_welcome(message):
-        bot.reply_to(message, "Вопросы: /ecology_what_is_it, /global_warming_what_is_it, /how_to_respect_the_ecology, /")
+        bot.reply_to(message, "Случайная картинка факт про экологию - /image \n Вопросы: \n Что такое экология? - /ecology_what_is_it, \n Что такое глобальное поетпление? - /global_warming_what_is_it, \n Как улучшить экологию? -  /how_to_respect_the_ecology")
 
 @bot.message_handler(commands=['ecology_what_is_it'])
 def send_welcome(message):
@@ -26,8 +28,10 @@ def send_welcome(message):
 def send_welcome(message):
         bot.reply_to(message, "Чтобы соблюдать экологию, нужно минимизировать воздействие на окружающую среду, начиная с простых повседневных действий. Это включает в себя сокращение отходов, разумное потребление ресурсов, таких как вода и электроэнергия, и заботу о природе во время отдыха на природе.")
 
-@bot.message_handler(commands=[''])
-def send_welcome(message):
-        bot.reply_to(message, "")
+@bot.message_handler(commands=['image'])
+def send_mem(message):
+    img_name = random.choice(os.listdir("images"))
+    with open(f'images/{img_name}', 'rb') as f:  
+        bot.send_photo(message.chat.id, f)
 
 bot.polling()
